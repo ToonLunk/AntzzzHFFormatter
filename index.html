@@ -19,7 +19,7 @@
   <textarea id="output" cols="100" rows="12" readonly="readonly"
     placeholder="Output will go here / La sortie ira ici"></textarea><br>
   <button id="copy">Copy to Clipboard / Copier le texte</button>
-  <button id="format">Formatter</button>
+  <button id="format">Format</button>
 
 
   <script type="text/javascript">
@@ -78,6 +78,18 @@
 
         if (line.includes("Attack")) {
           return 'Attack' + line.split("Attack")[1];
+        }
+
+        if (line.includes("Canceled")) {
+          return 'Canceled' + line.split("Canceled")[1];
+        }
+
+        if (line.includes("Invasion")) {
+          return 'Invasion' + line.split("Invasion")[1];
+        }
+
+        if (line.includes("Onslaught")) {
+          return 'Onslaught' + line.split("Onslaught")[1];
         }
 
         if (line.startsWith('Antzzz')) {
