@@ -19,17 +19,26 @@
   <textarea id="output" cols="100" rows="12" readonly="readonly"
     placeholder="Output will go here / La sortie ira ici"></textarea><br>
   <button id="copy">Copy to Clipboard / Copier le texte</button>
-  <button id="format">Format</button>
+  <button id="format">Formatter</button>
 
 
   <script type="text/javascript">
     "use strict";
 
-    function addToTotal(totalType, line) {
+    function addToTotal(totalType, line, isConvoy) {
       let numb = 0;
       // a confusing line... but i'm not good at regular expressions. splits the line twice,
       // once at the : (always precedes the number), and ends at the cm (always after the number)
-      numb = line.split(":")[1].split("cm")[0].match(/\d/g);
+      console.log(totalType);
+      console.log(line);
+
+      if (isConvoy) {
+        numb = line.split(":")[1].split("material ")[0].match(/\d/g);
+        console.log("m split");
+      } else {
+        console.log("C split");
+        numb = line.split(":")[1].split("cm")[0].match(/\d/g);
+      }
 
       try {
         numb = parseInt(numb.join(""));
@@ -67,7 +76,7 @@
         }
 
         if (line.includes("Convoy sent")) {
-          totalConvoySent = addToTotal(totalConvoySent, line);
+          totalConvoySent = addToTotal(totalConvoySent, line, true); // isConvoy is true
           return '[color=#002ead]Convoy' + line.replace(/^.*(?=Convoy sent)/, '').split("Convoy")[1] + '[/color]';
         }
 
@@ -80,16 +89,8 @@
           return 'Attack' + line.split("Attack")[1];
         }
 
-        if (line.includes("Canceled")) {
-          return 'Canceled' + line.split("Canceled")[1];
-        }
-
-        if (line.includes("Invasion")) {
-          return 'Invasion' + line.split("Invasion")[1];
-        }
-
-        if (line.includes("Onslaught")) {
-          return 'Onslaught' + line.split("Onslaught")[1];
+        if (line.includes("Reinforcements")) {
+          return 'Reinforcements' + line.split("Reinforcements")[1];
         }
 
         if (line.startsWith('Antzzz')) {
