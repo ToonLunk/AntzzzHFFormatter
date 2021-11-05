@@ -85,6 +85,11 @@
           return '[color=#09750c]Successful' + line.split("Successful")[1] + '[/color]';
         }
 
+        if (line.includes("Vos chasseuses")) {
+          totalHunted = addToTotal(totalHunted, line);
+          return '[color=#09750c]Vos chasseuses' + line.split("Vos chasseuses")[1] + '[/color]';
+        }
+
         if (line.includes("Attack")) {
           return 'Attack' + line.split("Attack")[1];
         }
@@ -92,6 +97,10 @@
         if (line.includes("Reinforcements")) {
           return 'Reinforcements' + line.split("Reinforcements")[1];
         }
+
+
+
+
 
         if (line.startsWith('Antzzz')) {
           return line.replace(/^Antzzz\s?([a-zA-Z]+)\s?\d\d?h\d\d?/, '');
