@@ -37,6 +37,7 @@
         console.log("m split");
       } else if (isFHunt) {
         numb = line.split("conquis")[1].split("material ")[0].match(/\d/g);
+        numb = line.split("conquis")[1].split("c")[0].match(/\d/g);
         console.log("FH split");
       } else {
         console.log("C split");

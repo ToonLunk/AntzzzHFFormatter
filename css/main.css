@@ -107,6 +107,11 @@ footer a:hover, button:hover {
     text-align: center;
 }
 
+#aboutDiv h4 {
+    margin-top: 15px; 
+    margin-bottom: 15px;
+}
+
 /* adjust screen size if on mobile */
 @media screen and (max-width: 900px) {
     textarea {
