@@ -101,6 +101,10 @@
           return 'Attack' + line.split("Attack")[1];
         }
 
+        if (line.includes("Canceled")) {
+          return 'Canceled' + line.split("Canceled")[1];
+        }
+
         if (line.includes("Reinforcements")) {
           return 'Reinforcements' + line.split("Reinforcements")[1];
         }
