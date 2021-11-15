@@ -34,6 +34,7 @@
 
       if (isConvoy) {
         numb = line.split(":")[1].split("material ")[0].match(/\d/g);
+        numb = line.split(" and ")[1].split("material ")[0].match(/\d/g);
         console.log("m split");
       } else if (isFHunt) {
         numb = line.split("conquis")[1].split("material ")[0].match(/\d/g);
