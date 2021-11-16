@@ -29,19 +29,24 @@
       let numb = 0;
       // a confusing line... but i'm not good at regular expressions. splits the line twice,
       // once at the : (always precedes the number), and ends at the cm (always after the number)
-      console.log(totalType);
-      console.log(line);
+      console.log("Total of type: " + totalType);
+      console.log("Line: " + line);
+
 
       if (isConvoy) {
-        numb = line.split(":")[1].split("material ")[0].match(/\d/g);
-        numb = line.split(" and ")[1].split("material ")[0].match(/\d/g);
-        console.log("m split");
+        if (line.includes("food")) {
+          numb = line.split(":")[1].split("food ")[0].match(/\d/g);
+          console.log("Added " + numb + " food!");
+        } else if (line.includes("material")) {
+          numb = line.split(":")[1].split("material ")[0].match(/\d/g);
+          console.log("material split");
+        }
       } else if (isFHunt) {
         numb = line.split("conquis")[1].split("material ")[0].match(/\d/g);
         numb = line.split("conquis")[1].split("c")[0].match(/\d/g);
-        console.log("FH split");
+        console.log("French hunt split");
       } else {
-        console.log("C split");
+        console.log("Cm split (probably an attack)");
         numb = line.split(":")[1].split("cm")[0].match(/\d/g);
       }
 
@@ -59,8 +64,9 @@
     document.querySelector('#format').addEventListener('click', () => {
       let totalLooted = 0;
       let totalRobbed = 0;
-      let totalConvoyReceived = 0;
-      let totalConvoySent = 0;
+      let totalConvoyReceived = 0; // materials
+      let totalConvoySent = 0; // materials
+      let totalFoodConvoySent = 0; // food
       let totalHunted = 0;
       let numb = 0;
 
@@ -84,7 +90,11 @@
         }
 
         if (line.includes("Convoy sent")) {
-          totalConvoySent = addToTotal(totalConvoySent, line, true); // isConvoy is true
+          if (line.includes("food")) {
+            totalFoodConvoySent = addToTotal(totalFoodConvoySent, line, true); // isConvoy is true
+          } else {
+            totalConvoySent = addToTotal(totalConvoySent, line, true); // isConvoy is true
+          }
           return '[color=#002ead]Convoy' + line.replace(/^.*(?=Convoy sent)/, '').split("Convoy")[1] + '[/color]';
         }
 
@@ -139,8 +149,12 @@
       document.querySelector('#output').value += '\n\n' + '[b]' + '[color=#09750c]Total HF looted: ' + totalLooted.toLocaleString() + '[/color][/b]';
       document.querySelector('#output').value += '\n' + '[b]' + '[color=#09750c]Total HF hunted: ' + totalHunted.toLocaleString() + '[/color][/b]';
       document.querySelector('#output').value += '\n' + '[b]' + '[color=#c5130f]Total HF robbed: ' + totalRobbed.toLocaleString() + '[/color][/b]';
+
+      document.querySelector('#output').value += '\n\n' + '[i]Approximate:[/i] ';
       document.querySelector('#output').value += '\n' + '[b]' + '[color=#002ead]Total materials [i]sent[/i]: ' + totalConvoySent.toLocaleString() + '[/color][/b]';
       document.querySelector('#output').value += '\n' + '[b]' + 'Total materials [i]received[/i]: ' + totalConvoyReceived.toLocaleString() + '[/b]';
+      document.querySelector('#output').value += '\n' + '[b]' + 'Total food [i]sent[/i]: ' + totalFoodConvoySent.toLocaleString() + '[/b]';
+
     });
 
     // for the copy-to-clipboard button:
